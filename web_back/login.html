@@ -25,14 +25,49 @@
                 <i class="iconfont icon-key"></i>
                 <input type="text" class="input_txt" placeholder="邮箱/手机号">
                 <input type="password" class="input_pass" placeholder="密码">
-                <input type="submit" class="input_sub" value="登 录">
+                 <!-- 由于表单元素submit可以自动提交,所以如果是submit的话,他是表单提交,如果想让他进行ajax提交,可以让他变成普通按钮
+                    或者是阻止默认事件
+                -->
+                <!-- <input type="submit" class="input_sub" value="登 录"> -->
+                <input type="button" class="input_sub" value="登 录">
             </form>
         </div>
 
-    </div> 
-<script>
-    
-</script>
+    </div>
+
 </body>
+<!-- 引入jQuery文件 -->
+<script src="./js/jquery-1.12.4.min.js"></script>
+<script src="./tools/config.js"></script>
+<script>
+    // 点击登录按钮,发送ajax请求
+    $('.input_sub').on('click', function () {
+        var username = $('.input_txt').val();
+        var password = $('.input_pass').val();
+        // console.log(username,password);
+        // 判断是否为空,如果用户名或者密码为空就返回
+        if (username.trim() === '' || password.trim() === '') {
+            alert('请输入完整信息~');
+            return;
+        }
+
+        // 发送ajax请求
+        $.ajax({
+            type: 'post',
+            url: USERLOGIN,
+            data: {
+                user_name: username,
+                password: password
+            },
+            success: function (res) {
+                // console.log(res);
+                if (res.code == 200) {
+                    location.href = './index.html';
+                }
+            }
+        })
+    })
+
+</script>
 
 </html>
