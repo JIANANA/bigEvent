@@ -87,68 +87,73 @@
 </body>
 <!-- 引入bootjs文件 -->
 <script src="./js/bootstrap/js/bootstrap.min.js"></script>
-<!-- 引入tools文件 -->
 <script src="./tools/config.js"></script>
 <script src="./tools/user.js"></script>
+
 <!-- 获取用户详细信息功能 -->
 <script>
+    // 获取用户详细信息填充到页面上
     user.getAllInfo({
         callback: function (res) {
+            // console.log(res);
             var data = res.data;
-            // console.log(data);
-            // 这里获取的是一个对象,通过对对象遍历获取里面所有的值
+
+            // 对数据进行遍历
+
             $.each(data, function (k, value) {
                 // console.log(k);
-                // 由于里面有一个头像获取的是url的路径,所以这里对其进行循环遍历的方式需要判断是否是图片
+                // 由于这里是用户头像,所以这里需要单独进行操作
+                // console.log(value);
                 if (k !== 'user_pic') {
                     $('#' + k).val(value);
                 } else {
+                    // 如果是图片则进行单独操作
                     $('.user_pic').prop('src', value);
                 }
             })
-
         }
-    })
-
+    });
 </script>
 <!-- 修改用户信息功能 -->
 <script>
-    // 点击修改按钮,弹出模态框
+    //点击修改按钮,判断用户是否完整输入信息,如果没有完整输入信息,则弹出模态框
     $('#submit').on('click', function () {
-        // 由于这里是表单提交所以这里要填写名字
+        // 通过formData获取表单值
         var fd = new FormData($('#form')[0]);
-        // console.log(fd);
         // console.log(fd.get('username'));
-        // console.log(fd.get('nickname'));
-        // console.log(fd.get('password'));
         // console.log(fd.get('user_pic'));
+        // console.log(fd.get('email'));
+        // console.log(fd.get('password'));
+        // console.log(fd.get('nickname'));
+
+
         if (
-            fd.get('username').trim === '' ||
-            fd.get('nickname').trim === '' ||
-            fd.get('password').trim === '' ||
-            fd.get('email').trim === '' ||
-            fd.get('user_pic').size === 0
+            fd.get('username') === '' ||
+            fd.get('user_pic').size === 0 ||
+            fd.get('email') === '' ||
+            fd.get('password') === '' ||
+            fd.get('nickname') === ''
         ) {
             $('#myModal').modal('show');
-            return;
-        }
-        user.edit({
-            callback: function (res) {
-                // console.log(res);
-                if (res.code === 200) {
-                    parent.location.href = './index.html';
+        } else {
+            user.edit({
+                data: fd,
+                callback: function (res) {
+                    // console.log(res);
+                    // 判断修改成功跳转到重新登录页面
+                    parent.location.href = './login.html';
                 }
-            }
-        })
+            });
+        }
     });
 
-    // 本地图片预览
     $('#exampleInputFile').on('change', function () {
-        var tempSrc = this.files[0];
-        var tempimgSrc = URL.createObjectURL(tempSrc);
-        $('.user_pic').prop('src', tempimgSrc);
-    })
+        var tempFile = this.files[0];
+        var tempImg = URL.createObjectURL(tempFile);
+        // console.log(tempFile);
+        $('.user_pic').prop('src', tempImg);
 
+    })
 </script>
 
 </html>

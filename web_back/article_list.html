@@ -22,17 +22,33 @@
             <div class="row opt_btns">
                 <div class="col-xs-6">
                     <form class="form-inline">
+                        <!-- 分类筛选的下拉菜单 -->
                         <select id="selCategory" name="" class="form-control input-sm">
-                            <option>所有分类</option>
-                            <option>未分类</option>
-                            <option>奇趣事</option>
-                            <option>会生活</option>
-                            <option>爱旅行</option>
+                            <!-- 
+                                    '所有分类'这个选项不能进行动态创建，因为不是一个真正的分类
+                                      - 下拉菜单的选项的value需要设置为分类的id
+                                      - 所有分类选项没有id，设置为''
+                    
+                                      - 下拉菜单选项如果没设置，提交的是option标签中的内容
+                                        - 如果设置了value，一定提交的是value的内容
+                                  -->
+                            <option value="">所有分类</option>
+                            <!--               
+                                  <option>未分类</option>
+                                  <option>奇趣事</option>
+                                  <option>会生活</option>
+                                  <option>爱旅行</option> 
+                                  -->
                         </select>
+                        <!-- 状态筛选的下拉菜单 -->
                         <select id="selStatus" name="" class="form-control input-sm">
-                            <option>所有状态</option>
-                            <option value="drafted">草稿</option>
-                            <option value="published">已发布</option>
+                            <!-- 状态和分类不同，分类可能被用户各种操作
+                                      但是状态通常是固定的几种情况
+                                      需要将value设置为中文状态
+                                  -->
+                            <option value="">所有状态</option>
+                            <option value="草稿">草稿</option>
+                            <option value="已发布">已发布</option>
                         </select>
                         <button id="btnSearch" class="btn btn-default btn-sm">筛选</button>
                     </form>
@@ -56,7 +72,7 @@
                 <tbody>
 
 
-
+                    <!-- 
                     <tr>
                         
                         <td>王积千造统最头</td>
@@ -244,37 +260,132 @@
                             <a href="javascript:deleteTr( 995 );" class="btn btn-danger btn-xs">删除</a>
                         </td>
                     </tr>
-
+ -->
 
                 </tbody>
             </table>
 
             <div class="row text-center">
-            <ul class="pagination pagination-sm">
-                <li class="page-item first disabled"><a href="#" class="page-link">首页</a></li>
-                <li class="page-item prev disabled"><a href="#" class="page-link">上一页</a></li>
-                <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                <li class="page-item"><a href="#" class="page-link">3</a></li>
-                <li class="page-item"><a href="#" class="page-link">4</a></li>
-                <li class="page-item"><a href="#" class="page-link">5</a></li>
-                <li class="page-item"><a href="#" class="page-link">6</a></li>
-                <li class="page-item"><a href="#" class="page-link">7</a></li>
-                <li class="page-item next"><a href="#" class="page-link">下一页</a></li>
-                <li class="page-item last"><a href="#" class="page-link">尾页</a></li>
-            </ul>
-        </div>
+                <ul class="pagination pagination-sm">
+                    <li class="page-item first disabled"><a href="#" class="page-link">首页</a></li>
+                    <li class="page-item prev disabled"><a href="#" class="page-link">上一页</a></li>
+                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    <li class="page-item"><a href="#" class="page-link">6</a></li>
+                    <li class="page-item"><a href="#" class="page-link">7</a></li>
+                    <li class="page-item next"><a href="#" class="page-link">下一页</a></li>
+                    <li class="page-item last"><a href="#" class="page-link">尾页</a></li>
+                </ul>
+            </div>
 
         </div>
     </div>
+    <!-- 书写模版 -->
+    <!-- /*
+    author: "管理员"
+    comment: 0
+    content: "<p><span class="bjh-p">在中国，一个明星要火起来很容易，有些偶像明星可以做到一档节目录制下来，就可以从一个练习生，变身火速传红成为一个一线明星，这取决于艺人们的个人魅力。蔡徐坤就是这样一个极具个人魅力的歌手，在参加《偶像练习生》之前，相信没几个人知道他是谁，可是当蔡徐坤在《偶像练习生》C位出道之后，微博粉丝蹭蹭往上窜，到目前为止，蔡徐坤的粉丝已经达到一千两百余万，要知道，这个粉丝量是很多明星努力一辈子都无法达到的高度。</span></p>↵<div class="img-container"><img class="large" src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1033275445,3656686656&amp;fm=173&amp;app=25&amp;f=JPEG?w=640&amp;h=961&amp;s=0F85F904C4E302A6F7BC2D9B0300108F" data-loadfunc="0" data-loaded="0" /></div>↵<p><span class="bjh-p">据小编观察，如今中国年青一代的网民普遍喜欢韩风明星，像更早一批的韩风男星鹿晗、张艺兴、黄子韬和吴亦凡，如今都是中国娱乐圈炙手可热的一线明星。所以很容易理解为什么蔡徐坤能在这么短的时间内红成这样，如今蔡徐坤的影响力丝毫不比张艺兴他们差。而且蔡徐坤是一个很努力地小伙子，粉丝们都纷纷向他看齐，所以越有影响力的明星，肩上担负的责任就越重，因为有太多粉丝每天都在向他们学习。</span></p>↵<div class="img-container"><img class="large" src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=931329574,1620074604&amp;fm=173&amp;app=25&amp;f=JPEG?w=640&amp;h=960&amp;s=2945536EDAE8B37400E818830200F080" data-loadfunc="0" data-loaded="0" /></div>↵<p><span class="bjh-p">蔡徐坤的个人魅力主要体现在舞台上，他是个天生属于舞台的人。站在舞台上，蔡徐坤整个人像打了鸡血一样尽情热舞，每次跳舞的时候，蔡徐坤有一个超级经典的动作，不知撩到多少迷妹。双手抓住衣领，然后用力往后一甩，整件衣服就这样挂在双手上，看的人口干舌燥。</span></p>↵<div class="img-container"><img class="normal" src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3664306556,3172678100&amp;fm=173&amp;app=25&amp;f=JPEG?w=476&amp;h=596&amp;s=E5F012C604091757DBEC389703005086" width="476px" data-loadfunc="0" data-loaded="0" /></div>↵<div class="img-container"><img class="normal" src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3373669814,1980763208&amp;fm=173&amp;app=25&amp;f=JPEG?w=391&amp;h=570&amp;s=BB934686525A17D402D4BDA403007082" width="391px" data-loadfunc="0" data-loaded="0" /></div>↵<p>&nbsp;</p>↵<p><span class="bjh-p">但是更撩人的还在后头，蔡徐坤用力的甩动着整个身体，看上去就像一条不停蠕动的蚯蚓，然后右手用力的举起来，再顺着身体往下游走，最后停在胯下，再用力这么一震，整个人都爽飞了。每次都这个动作的时候，台下的粉丝都会发出刺耳的尖叫声，不得不说，蔡徐坤这个动作真的很撩人，难怪那么多人喜欢！</span></p>↵<div class="img-container"><img class="normal" src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3897592336,1428352296&amp;fm=173&amp;app=25&amp;f=JPEG?w=440&amp;h=575&amp;s=C5E292476C8AB655C46D5D870300A086" width="440px" data-loadfunc="0" data-loaded="0" /></div>↵<p><span class="bjh-p">下面是蔡徐坤在多长巡回演唱会上跳舞时的经典动作，每一个都看的粉丝流鼻血，有不少网友表示：&ldquo;男人就当如此&rdquo;。</span></p>↵<div class="img-container"><img class="normal" src="https://hiphotos.baidu.com/feed/pic/item/dcc451da81cb39db924df886dc160924aa183054.jpg" width="480px" data-loadfunc="0" data-loaded="0" /></div>↵<div class="img-container"><img class="normal" src="https://hiphotos.baidu.com/feed/pic/item/11385343fbf2b2113e171b9ec68065380cd78e21.jpg" width="338px" data-loadfunc="0" data-loaded="0" /></div>↵<div class="img-container"><img class="normal" src="https://hiphotos.baidu.com/feed/pic/item/aa64034f78f0f736ee6cd3d10655b319eac4134b.jpg" width="276px" data-loadfunc="0" data-loaded="0" /></div>↵<div class="img-container"><img class="normal" src="https://hiphotos.baidu.com/feed/pic/item/d000baa1cd11728b57d613f2c4fcc3cec2fd2c62.jpg" width="403px" data-loadfunc="0" data-loaded="0" /></div>↵<div class="img-container"><img class="normal" src="https://hiphotos.baidu.com/feed/pic/item/d043ad4bd11373f0bab2f04fa80f4bfbfaed0454.jpg" width="403px" data-loadfunc="0" data-loaded="0" /></div>↵<div class="img-container"><img class="normal" src="https://hiphotos.baidu.com/feed/pic/item/c8ea15ce36d3d539150491133687e950352ab021.jpg" width="338px" data-loadfunc="0" data-loaded="0" /></div>↵<div class="img-container"><img class="normal" src="https://hiphotos.baidu.com/feed/pic/item/023b5bb5c9ea15ce97d77ed9ba003af33a87b221.jpg" width="480px" data-loadfunc="0" data-loaded="0" /></div>↵<div class="img-container"><img class="normal" src="https://hiphotos.baidu.com/feed/pic/item/a8ec8a13632762d01168ab57acec08fa503dc680.jpg" width="367px" data-loadfunc="0" data-loaded="0" /></div>↵<p><span class="bjh-p">蔡徐坤跳舞时的这个动作真的很撩，粉丝表示：要流鼻血了！看了蔡徐坤这些撩人的画面，你有没有被撩到呢？不行不行！你们先慢慢欣赏，小编去买纸巾擦鼻血...</span></p>↵<div class="img-container"><img class="normal" src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=4007787422,1443867088&amp;fm=173&amp;app=25&amp;f=JPEG?w=440&amp;h=660&amp;s=BA42F2044A33079C2E4C4884030050CA" width="440px" data-loadfunc="0" data-loaded="0" /></div>"
+    cover: "http://localhost:8000/static/articles/0e4dde5a32fcb4af537aa68fc7b90247"
+    date: "2019-05-28"
+    id: 235
+    read: 0
+    state: "草稿"
+    title: "震惊，当街跳舞，竟然有这种后果。。"
+    type: "新闻"
+*/ -->
+    <script type="text/html" id="cateory">
+        {{each data v}}
+        <tr>
+                <td>{{v.title}}</td>
+                <td>{{v.author}}</td>
+                <td>{{v.type}}</td>
+                <td class="text-center">{{v.date}}</td>
+                <td class="text-center">{{v.state}}</td>
+                <td class="text-center">
+                    <a href="post-edit.html?id=995" class="btn btn-default btn-xs">编辑</a>
+                    <a href="javascript:deleteTr( 995 );" class="btn btn-danger btn-xs">删除</a>
+                </td>
+            </tr>
+        {{/each}}
+    </script>
 
+    <script type="text/html" id="sel_option">
+        {{each data v}}
+        <option value="{{v.id}}">{{v.name}}</option>
+        {{/each}}
+    </script>
+    <!-- 引入模版引擎-->
+    <script src="./js/template-web.js"></script>
+    <script src="./tools/config.js"></script>
+    <script src="./tools/article.js"></script>
     <script>
         // 设置左侧菜单
-        $('#release_btn').click(function(){
-            window.parent.setMenu(1,1);
+        $('#release_btn').click(function () {
+            window.parent.setMenu(1, 1);
         })
     </script>
 
+
+    <script>
+        article.getCate({
+            callback: function (res) {
+                if (res.code === 200) {
+                    // 2.2 通过模板生成分类下拉菜单的选项
+                    var htmlStr = template('sel_option', res);
+                    $('#selCategory').append(htmlStr);
+                }
+            }
+        });
+
+        // 一进入页面就需要刷新数据进行数据的渲染
+        // $.ajax({
+        //     type: 'get',
+        //     url: 'http://localhost:8000/admin/search',
+        //     success: function (res) {
+        //         console.log(res);
+        //         // 获取数据成功,使用渲染引擎渲染页面
+        //         if (res.code === 200) {
+        //             var htmlStr = template('cateory', res);
+        //             // console.log(htmlStr);
+        //             $('tbody').html(htmlStr);
+        //         }
+        //     }
+        // })
+
+        getArticle();
+
+        // 所有分类也是动态创建
+
+        $('#btnSearch').on('click', function (e) {
+            // 注意上述的button按钮是用button写的默认是submit这里可以通过禁止默认事件进行阻止默认事件
+            e.preventDefault();
+            //向后台发送ajax请求
+           getArticle();
+        });
+
+        function getArticle(){
+
+            article.searchCate({
+                data: {
+                    type: $('#selCategory').val(),
+                    state: $('#selStatus').val()
+                },
+                callback:function (res) {
+                    console.log(res);
+                    // 获取数据成功,使用渲染引擎渲染页面
+                    if (res.code === 200) {
+                        var htmlStr = template('cateory', res);
+                        // console.log(htmlStr);
+                        $('tbody').html(htmlStr);
+                    }
+                }
+            })
+           
+        }
+    </script>
 </body>
 
 </html>

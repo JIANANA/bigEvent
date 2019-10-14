@@ -9,6 +9,12 @@ var user = {
       url: USER_LOGIN,
       data: options.data,
       success: options.callback
+      /* 
+      // 上面的写法是当前写法的简化形式：
+      success: function (res) {
+        options.callback(res);
+      }
+      */
     });
   },
   // logout方法用来管理用户退出接口的操作方式

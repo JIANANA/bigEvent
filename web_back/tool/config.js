@@ -15,7 +15,3 @@ var ARTICLE_GET = baseUrl + '/admin/category_search';
 var ARTICLE_ADD = baseUrl + '/admin/category_add';
 var ARTICLE_EDIT = baseUrl + '/admin/category_edit';
 var ARTICLE_DEL = baseUrl + '/admin/category_delete';
-
-// 文章筛选功能接口
-
-var ARTICLE_SEARCH=baseUrl+'/admin/search'

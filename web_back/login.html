@@ -59,41 +59,39 @@
 </body>
 <!-- 引入jQuery文件 -->
 <script src="./js/jquery-1.12.4.min.js"></script>
-<script src="./tools/config.js"></script>
-<script src="./tools/user.js"></script>
 <!-- 引入js文件 -->
 <script src="./js/bootstrap/js/bootstrap.min.js"></script>
+<script src="./tools/config.js"></script>
+<script src="./tools/user.js"></script>
+
+<!-- 功能1.点击按钮,弹出提示信息 -->
 <script>
-    // 点击登录按钮,发送ajax请求
-    $('.input_sub').on('click', function () {
-        var username = $('.input_txt').val();
-        var password = $('.input_pass').val();
-        // console.log(username,password);
-        // 判断是否为空,如果用户名或者密码为空就返回
-        if (username.trim() === '' || password.trim() === '') {
-            // alert('请输入完整信息~');
-            $('#myModal').modal('show')
-            .find('.modal-body').text('请输入完整信息!~');
+    // 添加点击事件
+    $('.input_sub').on('click',function(){
+        // 获取两个表单值
+        var username=$('.input_txt').val();
+        var password=$('.input_pass').val();
+        // 判断两个表单元素内容值是否为空,如果为空弹出相关信息,结束函数
+        if(username.trim()===''||password.trim()===''){
+            // alert('请完整输入信息!~');
+            $('#myModal').modal('show').find('.modal-body').html('请完整输入信息!~');
             return;
-        }
-
-        // 发送ajax请求
-        user.login({
-            data: {
-                user_name: username,
-                password: password
-            },
-            callback: function (res) {
-                // console.log(res);
-                if (res.code == 200) {
-                    location.href = './index.html';
-                }else{
-                    $('#myModal').modal('show').find('.modal-body').text('请输入正确的用户名或者密码!~');
+        }else{
+            // 判断不为空发送ajax请求
+            user.login({
+                data:{
+                    user_name:username,
+                    password:password,
+                },
+                callback:function(res){
+                    // console.log(res);
+                    // 判断登录是否成功,如果成功就跳转到首页
+                    if(res.code===200){
+                        location.href='./index.html';
+                    }
                 }
-            }
-        });
+            })
+        }
     })
-
 </script>
-
 </html>

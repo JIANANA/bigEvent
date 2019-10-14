@@ -131,50 +131,51 @@
 
     <!-- 引入bootjs文件 -->
     <script src="./js/bootstrap/js/bootstrap.min.js"></script>
+
     <script src="./tools/config.js"></script>
     <script src="./tools/user.js"></script>
     <!-- 用户点击退出功能 -->
     <script>
-        // 点击退出按钮,弹出退出提示框
+
+        
+        // 点击退出弹出模态框
         $('#logout').on('click', function () {
-            $('#myModal').modal('show')
-                .find('.modal-body').text('您想好了吗?');
+            $('#myModal').modal('show').find('.modal-body').html('确认退出吗?~');
         });
 
-        // 点击确定按钮,发送ajax请求
+        // 点击确定,发送ajax请求
 
         $('#logoutYes').on('click', function () {
             user.logout({
                 callback: function (res) {
                     // console.log(res);
-                    // 判断请求成功跳转到登录页面
+                    // 判断退出成功跳转到登录页面
                     if (res.code === 200) {
                         location.href = './login.html';
                     }
                 }
             });
-        });
+        })
+
 
     </script>
 
     <!-- 获取用户信息功能 -->
-
-    <!-- <script>
-        // 一刷新页面就加载信息
+    <script>
+        // 一进入页面就获取信息,并填充到相关内容上面
         user.getInfo({
-            callback:function(res){
-                // console.log(res);
-                // 把获取成功的信息渲染到页面中
-                if(res.code===200){
-                   var data=res.data;
-                   $('.user_info img').prop('src',data.user_pic);
-                   $('.user_info span').text(data.nickname);
-                   $('.user_center_link img').prop('src',data.user_pic);
+            callback: function (res) {
+                console.log(res);
+                // 判断是否成功
+                if (res.code === 200) {
+                    var data = res.data;
+                    $('.user_info img').prop('src', data.user_pic);
+                    $('.user_info span').html(data.nickname);
+                    $('.user_center_link img').prop('src', data.user_pic);
                 }
             }
-        })
-       
-    </script> -->
+        });
+    </script>
 </body>
 
 </html>
