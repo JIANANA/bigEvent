@@ -205,6 +205,35 @@
         <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
 
+    
 </body>
+    <!-- 从list页面跳转过来url列表里面存在id的选项,可以从这里重新取一次id进行跳转 -->
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script src="../web_back/js/template-web.js"></script>
 
+    <script>
+        // 获取上一个页面的id
+        var id=location.search.split('=')[1];
+        // console.log(id);
+        // 判断如果没有id就从当前页面跳转到上一个页面
+        if(!id){
+            location.href='./index.html';
+        }
+        axios({
+            method:'get',
+            url:'http://localhost:8000/admin/search',
+            params:{
+                id:id,
+            }
+        }).then(function(res){
+            var data=res.data.data;
+            // console.log(data);
+            // console.log(data.title);
+            $('.article_title').text(data.title);
+            $('.article_info').text(data.author + ' 发布于 ' + data.date + '   分类: ' + data.type + '   阅读:(' + data.read + ')   评论: (' + data.comment + ')')
+            $('.article_con').text(data.content);
+        })
+    
+    </script>
 </html>

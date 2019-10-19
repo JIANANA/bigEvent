@@ -31,20 +31,20 @@
                 <ul class="level_two">
                     <li class="up"></li>
                     <li><a href="#">最 新</a></li>
-                    <li><a href="#">科 技</a></li>
+                    <!-- <li><a href="#">科 技</a></li>
                     <li><a href="#">股 市</a></li>
                     <li><a href="#">商 品</a></li>
                     <li><a href="#">外 汇</a></li>
-                    <li><a href="#">公 司</a></li>
+                    <li><a href="#">公 司</a></li> -->
                 </ul>
             </div>
             <ul class="left_menu fl">
-                <li><a href="#">最 新</a></li>
-                <li><a href="#">科 技</a></li>
+                <li class="myNews"><a href="#">最 新</a></li>
+                <!-- <li><a href="#">科 技</a></li>
                 <li><a href="#">股 市</a></li>
                 <li><a href="#">商 品</a></li>
                 <li><a href="#">外 汇</a></li>
-                <li><a href="#">公 司</a></li>
+                <li><a href="#">公 司</a></li> -->
             </ul>
             <ul class="right_menu fr">
                 <li><a href="#">科技专题</a></li>
@@ -215,12 +215,81 @@
             <span>|</span>
             <a href="#">招聘人才</a>
             <span>|</span>
-            <a href="#">友情链接</a>		
+            <a href="#">友情链接</a>
         </div>
-        <p>CopyRight © 2019 深圳大事件信息技术股份有限公司   All Rights Reserved</p>
-        <p>电话：0755-****888    粤ICP备*******8号</p>
+        <p>CopyRight © 2019 深圳大事件信息技术股份有限公司 All Rights Reserved</p>
+        <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
 
+    <!-- 注意下面的类名是单独获取的,所以这里可以进行一个if判断
+        //判断当索引值是0的时候,类名是first
+    -->
+    <script type="text/html" id="article">
+        {{each data v i}}
+        
+        <li {{if i===0}}class="first"{{/if}}>
+                <a href="#"><img src="{{v.cover}}" alt=""></a>
+                <p>{{v.title}}</p>
+        </li>
+        {{/each}}
+    </script>
+
+    <!-- 上面的类型的值 -->
+    <script type="text/html" id="news">
+        {{each data v }}
+        <li><a href="./list.html?id={{v.id}}">{{v.name}}</a></li>
+        {{/each}}
+    </script>
+    <!-- 引入axios和jQuery文件和模版引擎 -->
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script src="../web_back/js/template-web.js"></script>
+
+    <script>
+
+        // 使用axios进行数据请求,请求方式与ajax方式差不多
+        axios({
+            method: 'get',//注意这里的获取方式与ajax方式不相同
+            url: 'http://localhost:8000/admin/search',
+            // 注意这里的变量与ajax也不相同,这里使用的是params
+            params: {
+                perpage: 5,
+            }
+        })
+            .then(function (res) {
+                console.log(res);
+                // 与ajax不同的是,这个数据外还包裹了一层数据
+                var res = res.data;
+                console.log(res);
+                if (res.code === 200) {
+                    var htmlStr = template('article', res);
+                    $('.focus_list').html(htmlStr);
+                }
+            });
+
+
+
+
+
+
+        // 文章类别接口
+        axios({
+            method: 'get',
+            url: 'http://localhost:8000/admin/category_search',
+        })
+            .then(function (res) {
+                var res = res.data;
+                console.log(res);
+                if (res.code == 200) {
+                    // console.log(111);
+                    var htmlNews = template('news', res);
+                    // console.log(htmlNews);
+                    $('.left_menu').append(htmlNews);
+                    $('.level_two').append(htmlNews);
+                }
+
+            })
+    </script>
 </body>
 
 </html>

@@ -267,7 +267,7 @@
 
             <div class="row text-center">
                 <ul class="pagination pagination-sm">
-                    <li class="page-item first disabled"><a href="#" class="page-link">首页</a></li>
+                    <!-- <li class="page-item first disabled"><a href="#" class="page-link">首页</a></li>
                     <li class="page-item prev disabled"><a href="#" class="page-link">上一页</a></li>
                     <li class="page-item active"><a href="#" class="page-link">1</a></li>
                     <li class="page-item"><a href="#" class="page-link">2</a></li>
@@ -277,7 +277,7 @@
                     <li class="page-item"><a href="#" class="page-link">6</a></li>
                     <li class="page-item"><a href="#" class="page-link">7</a></li>
                     <li class="page-item next"><a href="#" class="page-link">下一页</a></li>
-                    <li class="page-item last"><a href="#" class="page-link">尾页</a></li>
+                    <li class="page-item last"><a href="#" class="page-link">尾页</a></li> -->
                 </ul>
             </div>
 
@@ -321,6 +321,7 @@
     <script src="./js/template-web.js"></script>
     <script src="./tools/config.js"></script>
     <script src="./tools/article.js"></script>
+    <script src="./js/jquery.twbsPagination.js"></script>
     <script>
         // 设置左侧菜单
         $('#release_btn').click(function () {
@@ -330,6 +331,8 @@
 
 
     <script>
+        var myTotalPage;//定义一个全局变量用来保存响应数据之后的总页数
+        var myPage;//注意此处不能设置为1,因为有几页我们在刚开始是不知道,所以初始值不能是1
         article.getCate({
             callback: function (res) {
                 if (res.code === 200) {
@@ -363,27 +366,69 @@
             // 注意上述的button按钮是用button写的默认是submit这里可以通过禁止默认事件进行阻止默认事件
             e.preventDefault();
             //向后台发送ajax请求
-           getArticle();
+            
+
+            // 当两次网页的页数一样的话可能会出现页码的状态不变的情况,所以这里需要设置一个
+            $('.first').click();
+            getArticle();
         });
 
-        function getArticle(){
+        function getArticle() {
 
             article.searchCate({
                 data: {
                     type: $('#selCategory').val(),
-                    state: $('#selStatus').val()
+                    state: $('#selStatus').val(),
+                    // 注意这里新增的是page属性而不是perpage属性
+                    page:myPage,
                 },
-                callback:function (res) {
-                    console.log(res);
+                callback: function (res) {
+                    // console.log(res);
                     // 获取数据成功,使用渲染引擎渲染页面
                     if (res.code === 200) {
                         var htmlStr = template('cateory', res);
                         // console.log(htmlStr);
                         $('tbody').html(htmlStr);
+
+                        // 使用分页器插件
+                        // 由于该文件是基于jQuery和bootstrap的,所以要提前引入这个文件
+                        // 获取响应数据里面的totalpages,由于想要网页中的其他部分也使用这个变量,所以把这个变量定义为全局变量最为合适
+                        var totalPages=res.totalPage;
+                        // console.log(totalPages);
+                        // 每次进行新数据渲染的时候,就需要进行旧的数据的删除,注意这里由于没有删除旧的数组,所以这里的数据还是之前的,所以
+                        // 才会出现下面的页码一直没有变动的情况
+                        // 但是这里可能会出现两次操作相同页面的情况,为了不浪费资源可以判断两次页面相同的时候就停止进行页面的设置
+
+                        // 当数据中的totalPages=我要显示的的页码的时候,就结束函数
+                        if(totalPages===myTotalPage){
+                            console.log('相等了');
+                            return;
+                        }
+                        // 如果页码不同就把最新的页码赋值给我的总页数
+                        myTotalPage=totalPages;
+                        // console.log(myTotalPage);
+                        $('.pagination').twbsPagination('destroy');
+                        $('.pagination').twbsPagination({
+                            totalPages: totalPages,
+                            visiblePages: 5,
+                            first:'首页',
+                            prev:'上一页',
+                            next:'下一页',
+                            last:'尾页',
+                            // 当点击的时候也会出现分页的情况
+                            onPageClick:function(event ,page){
+                                // 输出是1,可见他有一个自动触发的功能
+                                // 问题当点击筛选的时候,设置的总页数的值没有改变
+                                myPage=page;
+                                // console.log(myPage);
+                                // 重新发送请求渲染页面
+                                getArticle();
+                            }
+                        });
                     }
                 }
             })
-           
+
         }
     </script>
 </body>
